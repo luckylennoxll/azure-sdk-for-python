@@ -1,81 +1,264 @@
-# Azure SDK for Python
+# Audioreworkvisions Python API library
 
-[![Packages](https://img.shields.io/badge/packages-latest-blue.svg)](https://azure.github.io/azure-sdk/releases/latest/python.html) [![Dependencies](https://img.shields.io/badge/dependency-report-blue.svg)](https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-python/dependencies/dependencies.html) [![DepGraph](https://img.shields.io/badge/dependency-graph-blue.svg)](https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-python/dependencies/dependencyGraph/index.html) [![Python](https://img.shields.io/pypi/pyversions/azure-core.svg?maxAge=2592000)](https://pypi.python.org/pypi/azure/) [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/python/python%20-%20core%20-%20ci?branchName=main)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=458&branchName=main)
+[![PyPI version](https://img.shields.io/pypi/v/audioreworkvisions.svg)](https://pypi.org/project/audioreworkvisions/)
 
-This repository is for active development of the Azure SDK for Python. For consumers of the SDK we recommend visiting our [public developer docs](https://docs.microsoft.com/python/azure/) or our versioned [developer docs](https://azure.github.io/azure-sdk-for-python).
+The Audioreworkvisions Python library provides convenient access to the Audioreworkvisions REST API from any Python 3.7+
+application. The library includes type definitions for all request params and response fields,
+and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
-## _Disclaimer_
+## Documentation
 
-_Azure SDK Python packages support for Python 2.7 has ended 01 January 2022. For more information and questions, please refer to https://github.com/Azure/azure-sdk-for-python/issues/20691_
+The REST API documentation can be found [on docs.audioreworkvisions.com](https://docs.audioreworkvisions.com). The full API of this library can be found in [api.md](api.md).
 
-## Getting started
+## Installation
 
-For your convenience, each service has a separate set of libraries that you can choose to use instead of one, large Azure package. To get started with a specific library, see the `README.md` (or `README.rst`) file located in the library's project folder.
+```sh
+pip install --pre audioreworkvisions
+```
 
-You can find service libraries in the `/sdk` directory.
+## Usage
 
-### Prerequisites
+The full API of this library can be found in [api.md](api.md).
 
-The client libraries are supported on Python 3.7 or later. For more details, please read our page on [Azure SDK for Python version support policy](https://github.com/Azure/azure-sdk-for-python/wiki/Azure-SDKs-Python-version-support-policy).
+```python
+from audioreworkvisions import Audioreworkvisions
 
-## Packages available
+client = Audioreworkvisions()
 
-Each service might have a number of libraries available from each of the following categories:
-* [Client - New Releases](#client-new-releases)
-* [Client - Previous Versions](#client-previous-versions)
-* [Management - New Releases](#management-new-releases)
-* [Management - Previous Versions](#management-previous-versions)
+pet = client.pets.retrieve(
+    "REPLACE_ME",
+)
+print(pet.id)
+```
 
-### Client: New Releases
+## Async usage
 
-New wave of packages that we are announcing as **GA** and several that are currently releasing in **preview**. These libraries allow you to use and consume existing resources and interact with them, for example: upload a blob. These libraries share a number of core functionalities such as: retries, logging, transport protocols, authentication protocols, etc. that can be found in the [azure-core](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/core/azure-core) library. You can learn more about these libraries by reading guidelines that they follow [here](https://azure.github.io/azure-sdk/python/guidelines/index.html).
+Simply import `AsyncAudioreworkvisions` instead of `Audioreworkvisions` and use `await` with each API call:
 
-You can find the [most up to date list of all of the new packages on our page](https://azure.github.io/azure-sdk/releases/latest/index.html#python)
+```python
+import asyncio
+from audioreworkvisions import AsyncAudioreworkvisions
 
-> NOTE: If you need to ensure your code is ready for production use one of the stable, non-preview libraries.
+client = AsyncAudioreworkvisions()
 
-### Client: Previous Versions
 
-Last stable versions of packages that have been provided for usage with Azure and are production-ready. These libraries provide you with similar functionalities to the Preview ones as they allow you to use and consume existing resources and interact with them, for example: upload a blob. They might not implement the [guidelines](https://azure.github.io/azure-sdk/python/guidelines/index.html) or have the same feature set as the November releases. They do however offer wider coverage of services.
+async def main() -> None:
+    pet = await client.pets.retrieve(
+        "REPLACE_ME",
+    )
+    print(pet.id)
 
-### Management: New Releases
-A new set of management libraries that follow the [Azure SDK Design Guidelines for Python](https://azure.github.io/azure-sdk/python/guidelines/) are now available. These new libraries provide a number of core capabilities that are shared amongst all Azure SDKs, including the intuitive Azure Identity library, an HTTP Pipeline with custom policies, error-handling, distributed tracing, and much more.
-Documentation and code samples for these new libraries can be found [here](https://aka.ms/azsdk/python/mgmt). In addition, a migration guide that shows how to transition from older versions of libraries is located [here](https://github.com/Azure/azure-sdk-for-python/blob/main/doc/sphinx/mgmt_quickstart.rst#migration-guide).
 
-You can find the [most up to date list of all of the new packages on our page](https://azure.github.io/azure-sdk/releases/latest/mgmt/python.html)
+asyncio.run(main())
+```
 
-> NOTE: If you need to ensure your code is ready for production use one of the stable, non-preview libraries. Also, if you are experiencing authentication issues with the management libraries after upgrading certain packages, it's possible that you upgraded to the new versions of SDK without changing the authentication code, please refer to the migration guide mentioned above for proper instructions.
+Functionality between the synchronous and asynchronous clients is otherwise identical.
 
-### Management: Previous Versions
-For a complete list of management libraries which enable you to provision and manage Azure resources, please [check here](https://azure.github.io/azure-sdk/releases/latest/all/python.html). They might not have the same feature set as the new releases but they do offer wider coverage of services.
-Management libraries can be identified by namespaces that start with `azure-mgmt-`, e.g. `azure-mgmt-compute`
+## Using types
 
-## Need help?
+Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev), which provide helper methods for things like:
 
-* For detailed documentation visit our [Azure SDK for Python documentation](https://aka.ms/python-docs)
-* File an issue via [Github Issues](https://github.com/Azure/azure-sdk-for-python/issues)
-* Check [previous questions](https://stackoverflow.com/questions/tagged/azure+python) or ask new ones on StackOverflow using `azure` and `python` tags.
+- Serializing back into JSON, `model.model_dump_json(indent=2, exclude_unset=True)`
+- Converting to a dictionary, `model.model_dump(exclude_unset=True)`
 
-### Community
+Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
 
-* Chat with other community members [![Join the chat at https://gitter.im/azure/azure-sdk-for-python](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/azure/azure-sdk-for-python?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+## Handling errors
 
-### Reporting security issues and security bugs
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `audioreworkvisions.APIConnectionError` is raised.
 
-Security issues and bugs should be reported privately, via email, to the Microsoft Security Response Center (MSRC) <secure@microsoft.com>. You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Further information, including the MSRC PGP key, can be found in the [Security TechCenter](https://www.microsoft.com/msrc/faqs-report-an-issue).
+When the API returns a non-success status code (that is, 4xx or 5xx
+response), a subclass of `audioreworkvisions.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-## Contributing
+All errors inherit from `audioreworkvisions.APIError`.
 
-For details on contributing to this repository, see the [contributing guide](https://github.com/Azure/azure-sdk-for-python/blob/main/CONTRIBUTING.md).
+```python
+import audioreworkvisions
+from audioreworkvisions import Audioreworkvisions
 
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit
-https://cla.microsoft.com.
+client = Audioreworkvisions()
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repositories using our CLA.
+try:
+    client.pets.retrieve(
+        "REPLACE_ME",
+    )
+except audioreworkvisions.APIConnectionError as e:
+    print("The server could not be reached")
+    print(e.__cause__)  # an underlying Exception, likely raised within httpx.
+except audioreworkvisions.RateLimitError as e:
+    print("A 429 status code was received; we should back off a bit.")
+except audioreworkvisions.APIStatusError as e:
+    print("Another non-200-range status code was received")
+    print(e.status_code)
+    print(e.response)
+```
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/)
-or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+Error codes are as followed:
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-python%2FREADME.png)
+| Status Code | Error Type                 |
+| ----------- | -------------------------- |
+| 400         | `BadRequestError`          |
+| 401         | `AuthenticationError`      |
+| 403         | `PermissionDeniedError`    |
+| 404         | `NotFoundError`            |
+| 422         | `UnprocessableEntityError` |
+| 429         | `RateLimitError`           |
+| >=500       | `InternalServerError`      |
+| N/A         | `APIConnectionError`       |
 
+### Retries
+
+Certain errors are automatically retried 2 times by default, with a short exponential backoff.
+Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict,
+429 Rate Limit, and >=500 Internal errors are all retried by default.
+
+You can use the `max_retries` option to configure or disable retry settings:
+
+```python
+from audioreworkvisions import Audioreworkvisions
+
+# Configure the default for all requests:
+client = Audioreworkvisions(
+    # default is 2
+    max_retries=0,
+)
+
+# Or, configure per-request:
+client.with_options(max_retries=5).pets.retrieve(
+    "REPLACE_ME",
+)
+```
+
+### Timeouts
+
+By default requests time out after 1 minute. You can configure this with a `timeout` option,
+which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
+
+```python
+from audioreworkvisions import Audioreworkvisions
+
+# Configure the default for all requests:
+client = Audioreworkvisions(
+    # 20 seconds (default is 1 minute)
+    timeout=20.0,
+)
+
+# More granular control:
+client = Audioreworkvisions(
+    timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
+)
+
+# Override per-request:
+client.with_options(timeout=5 * 1000).pets.retrieve(
+    "REPLACE_ME",
+)
+```
+
+On timeout, an `APITimeoutError` is thrown.
+
+Note that requests that time out are [retried twice by default](#retries).
+
+## Advanced
+
+### Logging
+
+We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
+
+You can enable logging by setting the environment variable `AUDIOREWORKVISIONS_LOG` to `debug`.
+
+```shell
+$ export AUDIOREWORKVISIONS_LOG=debug
+```
+
+### How to tell whether `None` means `null` or missing
+
+In an API response, a field may be explicitly `null`, or missing entirely; in either case, its value is `None` in this library. You can differentiate the two cases with `.model_fields_set`:
+
+```py
+if response.my_field is None:
+  if 'my_field' not in response.model_fields_set:
+    print('Got json like {}, without a "my_field" key present at all.')
+  else:
+    print('Got json like {"my_field": null}.')
+```
+
+### Accessing raw response data (e.g. headers)
+
+The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
+
+```py
+from audioreworkvisions import Audioreworkvisions
+
+client = Audioreworkvisions()
+response = client.pets.with_raw_response.retrieve(
+    "REPLACE_ME",
+)
+print(response.headers.get('X-My-Header'))
+
+pet = response.parse()  # get the object that `pets.retrieve()` would have returned
+print(pet.id)
+```
+
+These methods return an [`APIResponse`](https://github.com/luckylennoxll/tree/main/src/audioreworkvisions/_response.py) object.
+
+The async client returns an [`AsyncAPIResponse`](https://github.com/luckylennoxll/tree/main/src/audioreworkvisions/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+
+#### `.with_streaming_response`
+
+The above interface eagerly reads the full response body when you make the request, which may not always be what you want.
+
+To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
+
+```python
+with client.pets.with_streaming_response.retrieve(
+    "REPLACE_ME",
+) as response:
+    print(response.headers.get("X-My-Header"))
+
+    for line in response.iter_lines():
+        print(line)
+```
+
+The context manager is required so that the response will reliably be closed.
+
+### Configuring the HTTP client
+
+You can directly override the [httpx client](https://www.python-httpx.org/api/#client) to customize it for your use case, including:
+
+- Support for proxies
+- Custom transports
+- Additional [advanced](https://www.python-httpx.org/advanced/#client-instances) functionality
+
+```python
+import httpx
+from audioreworkvisions import Audioreworkvisions
+
+client = Audioreworkvisions(
+    # Or use the `AUDIOREWORKVISIONS_BASE_URL` env var
+    base_url="http://my.test.server.example.com:8083",
+    http_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
+
+### Managing HTTP resources
+
+By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
+
+## Versioning
+
+This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions, though certain backwards-incompatible changes may be released as minor versions:
+
+1. Changes that only affect static types, without breaking runtime behavior.
+2. Changes to library internals which are technically public but not intended or documented for external use. _(Please open a GitHub issue to let us know if you are relying on such internals)_.
+3. Changes that we do not expect to impact the vast majority of users in practice.
+
+We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
+
+We are keen for your feedback; please open an [issue](https://www.github.com/luckylennoxll/audioreworkvisions-python/issues) with questions, bugs, or suggestions.
+
+## Requirements
+
+Python 3.7 or higher.
